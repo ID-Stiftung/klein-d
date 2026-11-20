@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>klein d – Haus & Grundstück in 3D</title>
+<style>
+:root{--ink:#22303c;--mut:#5d6b78;--bg:#f4f1ea;--card:#fffdf8;--line:#ddd6c8;--acc:#24364a}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 48px}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+h1{font-size:clamp(28px,4.4vw,44px);line-height:1.05;margin:0;letter-spacing:-.01em}
+.sub{margin:6px 0 0;color:var(--mut)}
+.tag{font-size:13px;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:4px 12px;white-space:nowrap}
+.stage{position:relative;background:#dfe9f1;border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:16/10;max-height:78vh;width:100%}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.stage:fullscreen{border-radius:0;border:0;max-height:none;aspect-ratio:auto;width:100vw;height:100vh}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 0}
+.btn{appearance:none;border:1px solid var(--acc);background:var(--acc);color:#fff;font:600 15px/1 system-ui,sans-serif;padding:12px 18px;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--acc)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:26px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card h2{font-size:15px;margin:0 0 8px}
+.card ul{margin:0;padding-left:18px}.card li{margin:3px 0}
+.card small{display:block;color:var(--mut);font-weight:600;font-size:12px;margin:10px 0 2px}
+footer{margin-top:26px;color:var(--mut);font-size:13px}
+@media(max-width:640px){.stage{aspect-ratio:3/4}}
+</style></head><body><div class="wrap">
+<header><div><h1>klein d</h1><p class="sub">Haus und Grundstück als begehbares 3D-Modell – zum Durchspielen der Varianten.</p></div><span class="tag">Entwurf 68 · Innenmaße nach Scan</span></header>
+<div class="stage" id="stage"><iframe id="view" src="modell/" title="3D-Modell" allow="fullscreen" allowfullscreen></iframe></div>
+<div class="bar"><button class="btn" id="fs">Vollbild</button><a class="btn ghost" href="modell/">Nur das Modell öffnen</a></div>
+<div class="grid">
+<div class="card"><h2>Bedienung</h2><ul><li><b>Übersicht:</b> ziehen = drehen, Mausrad oder zwei Finger = zoomen</li><li><b>Rundgang:</b> durchs Haus und den Garten gehen</li><li>Das Steuerfeld unten rechts geht immer, auch am Handy</li><li><b>Grundriss:</b> EG und OG von oben, mit Möbeln</li><li><b>m²:</b> Raumgrößen in Übersicht, Rundgang und Grundriss</li><li><b>Orte:</b> direkt zu Außen- und Innenansichten springen</li><li>Unter „Mehr“: Dach ausblenden, nur Erdgeschoss, Grün ausblenden, Sommer/Winter</li></ul></div>
+<div class="card"><h2>Varianten</h2><small>Ohne Baugrundstück</small><ul><li>Haus wie heute (Bestand)</li><li>Haus geteilt · 2. Terrasse</li><li>Haus geteilt · Vorgarten</li></ul><small>Mit Baugrundstück nebenan</small><ul><li>Haus wie heute</li><li>Haus geteilt · 2. Terrasse</li><li>Haus geteilt · Vorgarten</li></ul></div>
+<div class="card"><h2>Stand</h2><ul><li>Innenräume nach LiDAR-Scan und altem Bauplan</li><li>Einrichtung nach den 3D-Scans</li><li>Außenanlagen aus Fotos und Drohnenbildern geschätzt</li><li>Flächen werden aus dem Modell berechnet (ca.-Werte, Wohnfläche im OG nach WoFlV)</li></ul></div>
+</div>
+<footer>Privat – bitte nicht weitergeben.</footer>
+</div>
+<script>
+(function(){ const st=document.getElementById('stage'), b=document.getElementById('fs');
+ const on=()=>document.fullscreenElement||document.webkitFullscreenElement;
+ b.onclick=()=>{ if(on()){ (document.exitFullscreen||document.webkitExitFullscreen).call(document); return; }
+   const f=st.requestFullscreen||st.webkitRequestFullscreen; if(!f){ location.href='modell/'; return; }
+   try{ const p=f.call(st); if(p&&p.catch) p.catch(()=>{ location.href='modell/'; }); }catch(e){ location.href='modell/'; } };
+ const upd=()=>{ b.textContent=on()?'Vollbild beenden':'Vollbild'; }; document.addEventListener('fullscreenchange',upd); document.addEventListener('webkitfullscreenchange',upd);
+})();
+</script></body></html>

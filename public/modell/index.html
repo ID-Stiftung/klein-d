@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta name="robots" content="noindex,nofollow"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Haus &amp; Grundstück – 3D-Modell Entwurf 68</title>
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#cfe0ec;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-user-select:none;user-select:none}
+canvas{display:block;touch-action:none}
+.hud{position:fixed;left:10px;top:10px;right:10px;display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;pointer-events:none}
+.title{background:rgba(255,255,255,.9);border-radius:10px;padding:7px 11px;font-size:12.5px;color:#223;line-height:1.35;box-shadow:0 1px 6px rgba(0,0,0,.12)}
+.title b{font-size:14px}.title small{color:#667}
+.btns{display:flex;gap:6px;margin-left:auto;pointer-events:auto;flex-wrap:wrap;justify-content:flex-end}
+.btn{border:0;border-radius:10px;padding:8px 11px;font-size:13px;font-weight:600;background:rgba(255,255,255,.9);color:#223;box-shadow:0 1px 6px rgba(0,0,0,.12);cursor:pointer}
+.btn.on{background:#24364a;color:#fff}
+.views{position:fixed;left:10px;bottom:14px;display:flex;gap:6px;flex-wrap:wrap;max-width:calc(100vw - 20px)}
+.views .btn{font-weight:500;font-size:12.5px;padding:7px 10px}
+#hint{position:fixed;left:50%;top:64px;transform:translateX(-50%);background:rgba(20,30,40,.8);color:#fff;font-size:13px;padding:8px 12px;border-radius:10px;transition:opacity .6s;pointer-events:none;max-width:80vw;text-align:center}
+#joy{position:fixed;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.6);display:none;pointer-events:none;transform:translate(-50%,-50%)}
+#knob{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(255,255,255,.8)}
+#load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#dfe9f1;color:#345;font-size:15px;z-index:9}
+#pad{position:fixed;right:10px;bottom:150px;display:grid;grid-template-columns:repeat(4,46px);grid-template-rows:repeat(3,46px);gap:5px;touch-action:none}
+#pad button{border:0;border-radius:10px;background:rgba(255,255,255,.88);color:#223;font-size:19px;font-weight:600;box-shadow:0 1px 6px rgba(0,0,0,.15);touch-action:none;-webkit-user-select:none;user-select:none;padding:0}
+#pad button:active,#pad button.dn{background:#24364a;color:#fff}
+#pad small{position:absolute;left:0;right:0;top:-18px;text-align:center;font-size:11px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+@media (min-width:900px){#pad{bottom:70px}}
+.title{display:none}
+.hud{flex-wrap:nowrap;align-items:center;gap:6px}
+.hud .btn{padding:7px 9px;font-size:13px;pointer-events:auto;white-space:nowrap}
+@media (max-width:480px){.hud{left:6px;right:6px;gap:4px}.hud .btn{padding:7px 6px;font-size:12px}}
+.btns{flex-wrap:nowrap;gap:0;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.12)}
+.btns .btn{border-radius:0;box-shadow:none}
+.panel{position:fixed;top:50px;left:10px;display:none;flex-direction:column;gap:4px;background:rgba(255,255,255,.95);border-radius:12px;padding:8px;box-shadow:0 4px 18px rgba(0,0,0,.22);max-height:calc(100vh - 70px);overflow:auto;min-width:170px;max-width:calc(100vw - 20px);z-index:5}
+.panel.open{display:flex}
+.panel .btn{box-shadow:none;background:transparent;text-align:left;font-weight:500;font-size:14px;padding:9px 10px;border-radius:8px}
+.panel .btn:active,.panel .btn.on{background:#24364a;color:#fff}
+.panel h4{margin:6px 10px 2px;font-size:11px;font-weight:600;color:#778;text-transform:none}
+.panel small{margin:6px 10px 2px;font-size:11px;color:#889}
+.views{bottom:auto;max-width:none;flex-wrap:nowrap}
+#pOpt{left:auto}
+#hint{top:auto;bottom:176px;font-size:12px}
+#pad{bottom:14px}
+@media (min-width:900px){#pad{bottom:14px}}
+#vinfo{position:fixed;top:56px;left:10px;width:min(330px,calc(100vw - 20px));background:rgba(255,255,255,.94);border-radius:12px;padding:10px 34px 10px 12px;box-shadow:0 4px 18px rgba(0,0,0,.2);font-size:13px;line-height:1.35;color:#24364a;z-index:4;box-sizing:border-box}
+#vinfo small{display:block;font-size:11px;color:#778;font-weight:600}
+#vinfo b{display:block;font-size:14px;margin:1px 0 4px}
+#vinfo ul{margin:0;padding-left:17px}
+#vinfo li{margin:2px 0}
+#vinfo .x{position:absolute;top:4px;right:6px;border:0;background:transparent;font-size:20px;line-height:1;color:#556;cursor:pointer;padding:4px 6px}
+#rlab{position:fixed;inset:0;pointer-events:none;z-index:3;overflow:hidden}
+.rl{position:absolute;left:0;top:0;background:rgba(255,255,255,.9);border-radius:7px;padding:3px 7px;font-size:11.5px;line-height:1.25;color:#1d2b3a;text-align:center;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.rl b{display:block;font-size:12px}.rl.sm{opacity:.8;font-size:10px;padding:2px 5px}.rl.sm b{font-size:10px}
+#rleg{position:fixed;right:10px;top:56px;display:none;max-width:min(340px,calc(100vw - 20px));background:rgba(255,255,255,.94);border-radius:12px;padding:8px 11px;font-size:12.5px;line-height:1.4;color:#24364a;box-shadow:0 4px 18px rgba(0,0,0,.2);z-index:4}
+#rleg b{font-size:13.5px}#rleg .g{color:#5a6878;font-size:11.5px}
+#rleg i{display:inline-block;width:18px;border-top:2px dashed;margin:0 4px 3px 2px;vertical-align:middle}
+#rleg .sc{margin-top:4px;font-size:11.5px;color:#24364a}#rleg .sc span{display:inline-block;height:6px;border:2px solid #24364a;border-top:0;margin-right:6px;vertical-align:middle}
+#rhere{position:fixed;left:50%;top:56px;transform:translateX(-50%);display:none;background:rgba(36,54,74,.9);color:#fff;border-radius:10px;padding:6px 12px;font-size:13px;z-index:4;white-space:nowrap}
+#flsw{position:fixed;left:50%;top:56px;transform:translateX(-50%);display:none;z-index:4;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.18)}
+#flsw .btn{border-radius:0;box-shadow:none;padding:7px 14px}
+.rl.w{font-size:12.5px;padding:4px 9px}
+@media (max-width:640px){.btns{position:fixed;right:6px;top:52px}#flsw{top:52px;left:6px;transform:none}#vinfo{top:96px}#rleg{top:auto;bottom:14px;left:10px;right:auto;max-width:calc(100vw - 225px)}#rhere{top:96px}}
+@media (max-width:600px){#rleg{font-size:11px;padding:6px 9px;cursor:pointer}#rleg:not(.full) .g{display:none}#rleg:not(.full)::after{content:'mehr …';display:block;font-size:10.5px;color:#778}.rl{font-size:10px;padding:2px 5px}.rl b{font-size:10.5px}}
+</style></head><body>
+<div id="diag" style="position:fixed;left:10px;bottom:10px;max-width:60vw;background:#b3261e;color:#fff;font:12px/1.35 system-ui,sans-serif;padding:8px 10px;border-radius:8px;z-index:20;display:none"></div>
+<script>(function(){ const d=document.getElementById('diag'); const say=t=>{ d.style.display='block'; d.textContent='Fehler: '+t+' – bitte diesen Text an Claude schicken'; };
+ addEventListener('error',e=>say((e.message||'unbekannt')+' ('+String(e.filename||'').split('/').pop()+':'+(e.lineno||0)+')')); addEventListener('unhandledrejection',e=>say(String(e.reason&&e.reason.message||e.reason)));
+ addEventListener('webglcontextlost',e=>say('Grafikkontext verloren (WebGL) – Seite neu laden'),true); })();</script>
+<div id="load">Modell wird geladen …</div>
+<div class="hud">
+ <div class="title"><b>Haus &amp; Grundstück</b> · Entwurf 68<br><small>Nach deinen Fotos und Drohnenvideos gebaut · Maßstab geschätzt</small></div>
+ <div class="btns">
+  <button class="btn" id="bVar">Variante: Bestand</button>
+  <button class="btn" id="bGreen">Grün ausblenden</button>
+  <button class="btn" id="bSeason">Winter</button>
+  <button class="btn on" id="bOrbit">Übersicht</button>
+  <button class="btn" id="bWalk">Rundgang</button>
+ </div>
+</div>
+<div class="views">
+ <button class="btn" data-v="eingang">Eingang</button>
+ <button class="btn" data-v="strasse">Giebel</button>
+ <button class="btn" data-v="hinten">Hintereingang</button>
+ <button class="btn" data-v="garten">Garten</button>
+ <button class="btn" data-v="terrasse">Terrasse</button>
+ <button class="btn" data-v="drohne">Drohne</button>
+ <button class="btn" data-v="oben">Von oben</button>
+ <button class="btn" data-v="umgebung">Umgebung</button>
+ <button class="btn" data-v="esszimmer">Esszimmer</button>
+ <button class="btn" data-v="esszimmer2">Esszimmer 2</button>
+ <button class="btn" data-v="flur">Flur</button>
+ <button class="btn" data-v="kueche">Küche</button>
+ <button class="btn" data-v="wohnzimmer">Wohnzimmer</button>
+ <button class="btn" data-v="wohnzimmer2">Wohnzimmer 2</button>
+ <button class="btn" data-v="zstr_r">Zimmer Straße rechts</button>
+ <button class="btn" data-v="zstr_l">Zimmer Straße links</button>
+ <button class="btn" data-v="zanbau">Zimmer Anbau</button>
+ <button class="btn" data-v="og_flur">Flur</button>
+ <button class="btn" data-v="og_z1">Zimmer 1</button>
+ <button class="btn" data-v="og_z2">Zimmer 2</button>
+ <button class="btn" data-v="og_z3">Zimmer 3</button>
+ <button class="btn" data-v="og_z4">Zimmer 4</button>
+ <button class="btn" data-v="og_bad1">Bad 1</button>
+ <button class="btn" data-v="og_sauna">Sauna</button>
+</div>
+<div id="pad"><small>Bewegen · Zoom · Höhe</small>
+ <span></span><button data-k="arrowup" aria-label="vor">▲</button><span></span><button data-k="+" aria-label="näher">＋</button>
+ <button data-k="arrowleft" aria-label="links">◀</button><button data-k="pageup" aria-label="höher">⤒</button><button data-k="arrowright" aria-label="rechts">▶</button><button data-k="-" aria-label="weiter weg">－</button>
+ <span></span><button data-k="arrowdown" aria-label="zurück">▼</button><span></span><button data-k="pagedown" aria-label="tiefer">⤓</button>
+</div>
+<div id="hint" style="opacity:0"></div>
+<div id="joy"><div id="knob"></div></div>
+<script src="lib/three.min.js"></script>
+<script src="lib/GLTFLoader.js"></script>
+<script src="lib/pako_inflate.min.js"></script>
+<script>
+const ASSET={}; (function(){ const N=["bestand.bin", "variante1.bin", "variante2.bin", "variante3.bin", "variante4.bin", "variante5.bin"], L=document.getElementById('load'); let n=0;
+ const sc=(u,cb)=>{ const e=document.createElement('script'); e.src=u; e.onload=cb; e.onerror=()=>{ L.textContent='Fehler beim Laden'; }; document.body.appendChild(e); };
+ Promise.all(N.map(f=>fetch('assets/'+f).then(r=>{ if(!r.ok) throw 0; return r.arrayBuffer(); }).then(b=>{ ASSET[f]=b; n++; if(L) L.textContent='Modell wird geladen … '+Math.round(100*n/N.length)+' %'; })))
+  .then(()=>sc('app.js?v=68',()=>sc('ui.js?v=68',()=>sc('plan.js?v=68',()=>{})))).catch(()=>{ if(L) L.textContent='Fehler beim Laden – bitte Seite neu laden'; }); })();
+</script>
+
+</body></html>
