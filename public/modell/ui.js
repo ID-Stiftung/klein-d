@@ -1,17 +1,17 @@
 
-const N_='66';
+const N_='67';
 (function(){ const hud=document.querySelector('.hud'), views=document.querySelector('.views'), title=document.querySelector('.title');
  const mk=(t,id)=>{ const b=document.createElement('button'); b.className='btn'; b.id=id; b.textContent=t; return b; };
- const bV=mk('Ansichten ▾','bViews'), bO=mk('Mehr ▾','bOpt'); hud.insertBefore(bO,hud.firstChild); hud.insertBefore(bV,hud.firstChild);
+ const bV=mk('Orte ▾','bViews'), bO=mk('Mehr ▾','bOpt'); hud.insertBefore(bO,hud.firstChild); hud.insertBefore(bV,hud.firstChild);
  views.classList.add('panel'); const h=(t,before)=>{ const e=document.createElement('h4'); e.textContent=t; views.insertBefore(e,before); };
- h('Außen',views.querySelector('[data-v=eingang]')); h('Innen',views.querySelector('[data-v=grundriss]'));
+ h('Außen',views.querySelector('[data-v=eingang]')); h('Innen Erdgeschoss',views.querySelector('[data-v=esszimmer]')); h('Innen Obergeschoss',views.querySelector('[data-v=og_flur]'));
  const po=document.createElement('div'); po.className='panel'; po.id='pOpt'; document.body.appendChild(po);
- document.getElementById('bVar').remove(); const bD=mk('Dach ausblenden','bRoof'), bG=mk('Obergeschoss ausblenden','bOG'); po.appendChild(document.getElementById('bGreen')); po.appendChild(bD); po.appendChild(bG); po.appendChild(document.getElementById('bSeason'));
+ document.getElementById('bVar').remove(); const bD=mk('Dach ausblenden','bRoof'), bG=mk('Nur Erdgeschoss zeigen','bOG'); po.appendChild(document.getElementById('bGreen')); po.appendChild(bD); po.appendChild(bG); po.appendChild(document.getElementById('bSeason'));
  const RRX=/^(Haus_(Dachpfanne|Ortgang|Schiefer|Schuessel|Gaubendach|Schornsteinkopf)|Innen_Dachschraege|Schraege_)/; let roofOff=false, ogOff=false;
  const applyRoof=()=>{ ALLR().forEach(R=>R.traverse(o=>{ if(o.isMesh&&RRX.test(o.name)){ if(roofOff) o.visible=false; else o.visible=!o.userData.vh; } })); };
  const _sv=setVariant; setVariant=i=>{ _sv(i); applyRoof(); }; const _ss=setSeason; setSeason=w=>{ _ss(w); applyRoof(); }; const _sc=setCut; setCut=c=>_sc(c||ogOff);
  bD.onclick=()=>{ roofOff=!roofOff; applyRoof(); bD.textContent=roofOff?'Dach einblenden':'Dach ausblenden'; bD.classList.toggle('on',roofOff); };
- bG.onclick=()=>{ ogOff=!ogOff; setCut(false); bG.textContent=ogOff?'Obergeschoss einblenden':'Obergeschoss ausblenden'; bG.classList.toggle('on',ogOff); };
+ bG.onclick=()=>{ ogOff=!ogOff; setCut(false); bG.textContent=ogOff?'Obergeschoss wieder zeigen':'Nur Erdgeschoss zeigen'; bG.classList.toggle('on',ogOff); };
  const bR=mk('Varianten ▾','bVars'); hud.insertBefore(bR,bO); const pv=document.createElement('div'); pv.className='panel'; pv.id='pVar'; document.body.appendChild(pv);
  const GRP={ohne:'Ohne Baugrundstück',mit:'Mit Baugrundstück nebenan'};
  const fill=()=>{ pv.innerHTML=''; ['ohne','mit'].forEach(g=>{ const e=document.createElement('h4'); e.textContent=GRP[g]; pv.appendChild(e); VARS.forEach((v,i)=>{ if(v.g!==g) return; const b=mk(v.k,''); b.removeAttribute('id'); if(i===vi) b.classList.add('on'); b.onclick=()=>{ setVariant(i); close(); }; pv.appendChild(b); }); }); };

@@ -64,6 +64,16 @@ const VIEWS={
  waschk:()=>{ setMode('walk',true); lookFrom(B(-6.6,-7.2),B(-5,-6.2)); walk.pos.y=2.0; },
  wohnzimmer:()=>{ setMode('walk',true); lookFrom(B(-6.6,-13.2),B(-11,-11.6)); walk.pos.y=2.0; },
  wohnzimmer2:()=>{ setMode('walk',true); lookFrom(B(-8.2,-12.6),B(-5.2,-9)); walk.pos.y=2.0; },
+ zstr_r:()=>{ setMode('walk',true); lookFrom(B(-0.3,-3.9),B(2.4,-0.9)); walk.pos.y=2.0; },
+ zstr_l:()=>{ setMode('walk',true); lookFrom(B(-0.9,-3.9),B(-4.0,-1.0)); walk.pos.y=2.0; },
+ zanbau:()=>{ setMode('walk',true); lookFrom(B(-7.6,-7.0),B(-10.5,-10.3)); walk.pos.y=2.0; },
+ og_flur:()=>{ setMode('walk',true); lookFrom(B(-1.0,-5.5),B(-3,-8.8)); walk.pos.y=4.55; },
+ og_z1:()=>{ setMode('walk',true); lookFrom(B(-1.0,-8.5),B(1.5,-12.3)); walk.pos.y=4.55; walk.pitch=-.12; },
+ og_z2:()=>{ setMode('walk',true); lookFrom(B(-0.3,-4.7),B(1.8,-1)); walk.pos.y=4.55; walk.pitch=-.12; },
+ og_z3:()=>{ setMode('walk',true); lookFrom(B(-1.1,-3.9),B(-3.2,-0.8)); walk.pos.y=4.55; walk.pitch=-.12; },
+ og_z4:()=>{ setMode('walk',true); lookFrom(B(-7.5,-8.4),B(-10.5,-11.8)); walk.pos.y=4.55; walk.pitch=-.12; },
+ og_bad1:()=>{ setMode('walk',true); lookFrom(B(-2.0,-9.4),B(-2.2,-12.4)); walk.pos.y=4.55; walk.pitch=-.3; },
+ og_sauna:()=>{ setMode('walk',true); lookFrom(B(2.6,-5.6),B(4.8,-7.5)); walk.pos.y=4.5; walk.pitch=-.2; },
 };
 document.querySelectorAll('.views .btn').forEach(b=>b.onclick=()=>VIEWS[b.dataset.v]());
 lookFrom(B(3.7,10.5),B(3.7,-5));
