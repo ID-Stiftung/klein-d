@@ -1,4 +1,4 @@
-# klein d – 3D-Modell Haus & Grundstück (Entwurf 81)
+# klein d – 3D-Modell Haus & Grundstück (Entwurf 82)
 
 Statische Seite, ausgeliefert von nginx (Dockerfile). Ziel: klein-d.lutzwoellert.de
 
