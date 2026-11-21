@@ -1,5 +1,5 @@
 
-const N_='84';
+const N_='85';
 (function(){ const hud=document.querySelector('.hud'), views=document.querySelector('.views'), title=document.querySelector('.title');
  const mk=(t,id)=>{ const b=document.createElement('button'); b.className='btn'; b.id=id; b.textContent=t; return b; };
  const bV=mk('Orte ▾','bViews'), bO=mk('Mehr ▾','bOpt'); hud.insertBefore(bO,hud.firstChild); hud.insertBefore(bV,hud.firstChild);
