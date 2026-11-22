@@ -2,7 +2,7 @@
 <html lang="de"><head>
 <meta name="robots" content="noindex,nofollow"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Haus &amp; Grundstück – 3D-Modell Entwurf 95</title>
+<title>Haus &amp; Grundstück – 3D-Modell Entwurf 96</title>
 <style>
 html,body{margin:0;height:100%;overflow:hidden;background:#cfe0ec;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-user-select:none;user-select:none}
 canvas{display:block;touch-action:none}
@@ -66,7 +66,7 @@ canvas{display:block;touch-action:none}
  addEventListener('webglcontextlost',e=>say('Grafikkontext verloren (WebGL) – Seite neu laden'),true); })();</script>
 <div id="load">Modell wird geladen …</div>
 <div class="hud">
- <div class="title"><b>Haus &amp; Grundstück</b> · Entwurf 95<br><small>Nach deinen Fotos und Drohnenvideos gebaut · Maßstab geschätzt</small></div>
+ <div class="title"><b>Haus &amp; Grundstück</b> · Entwurf 96<br><small>Nach deinen Fotos und Drohnenvideos gebaut · Maßstab geschätzt</small></div>
  <div class="btns">
   <button class="btn" id="bVar">Variante: Bestand</button>
   <button class="btn" id="bGreen">Grün ausblenden</button>
@@ -112,10 +112,10 @@ canvas{display:block;touch-action:none}
 <script src="lib/GLTFLoader.js"></script>
 <script src="lib/pako_inflate.min.js"></script>
 <script>
-const ASSET={}; (function(){ const N=["bestand.bin", "variante1.bin", "variante2.bin", "variante3.bin", "variante4.bin", "variante5.bin", "variante6.bin", "variante7.bin"], L=document.getElementById('load'); let n=0;
+const ASSET={}; (function(){ const N=["bestand.bin", "variante1.bin", "variante2.bin", "variante3.bin", "variante4.bin", "variante5.bin", "variante6.bin"], L=document.getElementById('load'); let n=0;
  const sc=(u,cb)=>{ const e=document.createElement('script'); e.src=u; e.onload=cb; e.onerror=()=>{ L.textContent='Fehler beim Laden'; }; document.body.appendChild(e); };
  Promise.all(N.map(f=>fetch('assets/'+f).then(r=>{ if(!r.ok) throw 0; return r.arrayBuffer(); }).then(b=>{ ASSET[f]=b; n++; if(L) L.textContent='Modell wird geladen … '+Math.round(100*n/N.length)+' %'; })))
-  .then(()=>sc('app.js?v=95',()=>sc('ui.js?v=95',()=>sc('plan.js?v=95',()=>{})))).catch(()=>{ if(L) L.textContent='Fehler beim Laden – bitte Seite neu laden'; }); })();
+  .then(()=>sc('app.js?v=96',()=>sc('ui.js?v=96',()=>sc('plan.js?v=96',()=>{})))).catch(()=>{ if(L) L.textContent='Fehler beim Laden – bitte Seite neu laden'; }); })();
 </script>
 
 </body></html>
