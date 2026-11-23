@@ -1,5 +1,5 @@
 
-const N_='109';
+const N_='110';
 (function(){ const hud=document.querySelector('.hud'), views=document.querySelector('.views'), title=document.querySelector('.title');
  const mk=(t,id)=>{ const b=document.createElement('button'); b.className='btn'; b.id=id; b.textContent=t; return b; };
  const bV=mk('Orte ▾','bViews'), bO=mk('Mehr ▾','bOpt'); hud.insertBefore(bO,hud.firstChild); hud.insertBefore(bV,hud.firstChild);
@@ -13,8 +13,8 @@ const N_='109';
  bD.onclick=()=>{ roofOff=!roofOff; applyRoof(); bD.textContent=roofOff?'Dach einblenden':'Dach ausblenden'; bD.classList.toggle('on',roofOff); };
  bG.onclick=()=>{ ogOff=!ogOff; setCut(false); bG.textContent=ogOff?'Obergeschoss wieder zeigen':'Nur Erdgeschoss zeigen'; bG.classList.toggle('on',ogOff); };
  const bR=mk('Varianten ▾','bVars'); hud.insertBefore(bR,bO); const pv=document.createElement('div'); pv.className='panel'; pv.id='pVar'; document.body.appendChild(pv);
- const GRP={ohne:'Ohne Baugrundstück',mit:'Mit Baugrundstück nebenan'};
- const fill=()=>{ pv.innerHTML=''; ['ohne','mit'].forEach(g=>{ const e=document.createElement('h4'); e.textContent=GRP[g]; pv.appendChild(e); VARS.forEach((v,i)=>{ if(v.g!==g) return; const b=mk(v.k,''); b.removeAttribute('id'); if(i===vi) b.classList.add('on'); b.onclick=()=>{ setVariant(i); close(); }; pv.appendChild(b); }); }); };
+ const GRP={ohne:'Ohne Baugrundstück',mit:'Mit Baugrundstück nebenan',innen:'Innenausbau (mit Eingang an den Birken)'};
+ const fill=()=>{ pv.innerHTML=''; ['ohne','mit','innen'].forEach(g=>{ const e=document.createElement('h4'); e.textContent=GRP[g]; pv.appendChild(e); VARS.forEach((v,i)=>{ if(v.g!==g) return; const b=mk(v.k,''); b.removeAttribute('id'); if(i===vi) b.classList.add('on'); b.onclick=()=>{ setVariant(i); close(); }; pv.appendChild(b); }); }); };
  const card=document.createElement('div'); card.id='vinfo'; document.body.appendChild(card); let infoOn=true;
  const bI=mk('ⓘ','bInfo'); bI.title='Info zur Variante'; hud.insertBefore(bI,bO.nextSibling);
  const showInfo=()=>{ const v=VARS[vi]; card.innerHTML=''; const x=document.createElement('button'); x.textContent='×'; x.className='x'; x.onclick=()=>{ infoOn=false; showInfo(); }; card.appendChild(x);
