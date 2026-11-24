@@ -1,5 +1,5 @@
 
-const N_='112';
+const N_='113';
 (function(){ const hud=document.querySelector('.hud'), views=document.querySelector('.views'), title=document.querySelector('.title');
  const mk=(t,id)=>{ const b=document.createElement('button'); b.className='btn'; b.id=id; b.textContent=t; return b; };
  const bV=mk('Orte ▾','bViews'), bO=mk('Mehr ▾','bOpt'); hud.insertBefore(bO,hud.firstChild); hud.insertBefore(bV,hud.firstChild);
@@ -14,7 +14,20 @@ const N_='112';
  bG.onclick=()=>{ ogOff=!ogOff; setCut(false); bG.textContent=ogOff?'Obergeschoss wieder zeigen':'Nur Erdgeschoss zeigen'; bG.classList.toggle('on',ogOff); };
  const bR=mk('Varianten ▾','bVars'); hud.insertBefore(bR,bO); const pv=document.createElement('div'); pv.className='panel'; pv.id='pVar'; document.body.appendChild(pv);
  const GRP={ohne:'Ohne Baugrundstück',mit:'Mit Baugrundstück nebenan',innen:'Innenausbau (mit Eingang an den Birken)'};
- const fill=()=>{ pv.innerHTML=''; ['ohne','mit','innen'].forEach(g=>{ const e=document.createElement('h4'); e.textContent=GRP[g]; pv.appendChild(e); VARS.forEach((v,i)=>{ if(v.g!==g) return; const b=mk(v.k,''); b.removeAttribute('id'); if(i===vi) b.classList.add('on'); b.onclick=()=>{ setVariant(i); close(); }; pv.appendChild(b); }); }); };
+ const HX=[['heute','wie heute'],['t2','geteilt · 2. Terrasse'],['vg','geteilt · Vorgarten'],['eb','Eingang an den Birken'],['ebd','Eingang Birken + Dachterrasse']], QX=[['0','keine'],['A','A · Insel mit Bar'],['B','B · L-Küche, Tür zu'],['C','C · im Wohnzimmer']];
+ const fv=(h,q)=>VARS.findIndex(v=>v.h===h&&v.q===q);
+ const chips=(title,arr,cur,idx)=>{ const e=document.createElement('h4'); e.textContent=title; pv.appendChild(e); const row=document.createElement('div'); row.className='row'; pv.appendChild(row);
+   arr.forEach(([key,lab])=>{ const b=mk(lab,''); b.removeAttribute('id'); b.classList.add('chip'); const i=idx(key); if(i<0){ b.disabled=true; b.classList.add('off'); b.title='noch nicht gebaut'; } if(key===cur) b.classList.add('on'); b.onclick=e2=>{ e2.stopPropagation(); if(i>=0) setVariant(i); }; row.appendChild(b); }); };
+ const fill=()=>{ pv.innerHTML=''; const v=VARS[vi], bau=v.h==='bau', ch=bau?'heute':v.h, cq=bau?'0':v.q;
+   chips('Haus außen',HX,bau?null:ch,k=>{ const i=fv(k,cq); return i<0?fv(k,'0'):i; });
+   chips('Küche innen',QX,bau?null:cq,k=>fv(ch,k));
+   if(fv(ch,'A')<0){ const n=document.createElement('small'); n.textContent='Küchen gibt es bisher nur mit „Eingang an den Birken“.'; pv.appendChild(n); }
+   chips('Alternative zum heutigen Haus',[['bau','Baugrundstück abgetrennt']],bau?'bau':null,()=>fv('bau','0')); };
+ const vb=document.createElement('div'); vb.id='vbar'; document.body.appendChild(vb); let lastVi=0;
+ const vbb=(t,ti,f)=>{ const b=document.createElement('button'); b.textContent=t; b.title=ti; b.onclick=e=>{ e.stopPropagation(); f(); }; vb.appendChild(b); return b; };
+ vbb('‹','vorherige Variante',()=>setVariant((vi+VARS.length-1)%VARS.length)); const vlab=document.createElement('span'); vb.appendChild(vlab); vbb('›','nächste Variante',()=>setVariant((vi+1)%VARS.length));
+ const bCmp=vbb('⇄','Vergleich: zurück zur zuletzt gezeigten Variante',()=>setVariant(lastVi));
+ const _sv3=setVariant; setVariant=i=>{ if(i!==vi) lastVi=vi; _sv3(i); vlab.textContent=VARS[vi].k; bCmp.title='Vergleich mit: '+VARS[lastVi].k; if(pv.classList.contains('open')) fill(); }; vlab.textContent=VARS[vi].k;
  const card=document.createElement('div'); card.id='vinfo'; document.body.appendChild(card); let infoOn=true;
  const bI=mk('ⓘ','bInfo'); bI.title='Info zur Variante'; hud.insertBefore(bI,bO.nextSibling);
  const showInfo=()=>{ const v=VARS[vi]; card.innerHTML=''; const x=document.createElement('button'); x.textContent='×'; x.className='x'; x.onclick=()=>{ infoOn=false; showInfo(); }; card.appendChild(x);
