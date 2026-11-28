@@ -1,5 +1,5 @@
 
-const N_='113';
+const N_='114';
 (function(){ const hud=document.querySelector('.hud'), views=document.querySelector('.views'), title=document.querySelector('.title');
  const mk=(t,id)=>{ const b=document.createElement('button'); b.className='btn'; b.id=id; b.textContent=t; return b; };
  const bV=mk('Orte ▾','bViews'), bO=mk('Mehr ▾','bOpt'); hud.insertBefore(bO,hud.firstChild); hud.insertBefore(bV,hud.firstChild);
@@ -21,7 +21,7 @@ const N_='113';
  const fill=()=>{ pv.innerHTML=''; const v=VARS[vi], bau=v.h==='bau', ch=bau?'heute':v.h, cq=bau?'0':v.q;
    chips('Haus außen',HX,bau?null:ch,k=>{ const i=fv(k,cq); return i<0?fv(k,'0'):i; });
    chips('Küche innen',QX,bau?null:cq,k=>fv(ch,k));
-   if(fv(ch,'A')<0){ const n=document.createElement('small'); n.textContent='Küchen gibt es bisher nur mit „Eingang an den Birken“.'; pv.appendChild(n); }
+   if(fv(ch,'A')<0){ const n=document.createElement('small'); n.textContent='Küchen gibt es mit „Eingang an den Birken“, mit und ohne Dachterrasse.'; pv.appendChild(n); }
    chips('Alternative zum heutigen Haus',[['bau','Baugrundstück abgetrennt']],bau?'bau':null,()=>fv('bau','0')); };
  const vb=document.createElement('div'); vb.id='vbar'; document.body.appendChild(vb); let lastVi=0;
  const vbb=(t,ti,f)=>{ const b=document.createElement('button'); b.textContent=t; b.title=ti; b.onclick=e=>{ e.stopPropagation(); f(); }; vb.appendChild(b); return b; };
